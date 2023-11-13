@@ -15,7 +15,7 @@ symbol_count = { # dictionary
     "D": 8
 }
 
-symbol_value ={
+symbol_value = {
     "A": 5,
     "B": 4,
     "C": 3,
@@ -65,9 +65,9 @@ def print_slot_machine(columns): # transposing
             
         print() # brings it down to the next line before printing the next row
 
-def deposit(): # function
+def deposit():
     while True:
-        amount = input("What would you like to deposit? $") # prompt
+        amount = input("What would you like to deposit? $")
         if amount.isdigit(): # check that amount is a valid number
             amount = int(amount) # convert amount input from string to a number(integer)
             if amount > 0:
@@ -104,10 +104,9 @@ def get_bet():
             print("Please enter a number.")
     return amount
 
-def main():
-    balance = deposit()
-    lines = get_number_of_lines()
 
+def spin(balance): # executes one spin
+    lines = get_number_of_lines()
     while True:
         bet = get_bet()
         total_bet = bet * lines
@@ -124,5 +123,17 @@ def main():
     winnings, winning_lines = check_winnings(slots, lines, bet, symbol_value)
     print(f"You won ${winnings}!")
     print(f"You won on lines:", *winning_lines) # * splat operator, passes every line from the winning_lines list to this print function
+    return winnings - total_bet
+
+def main():
+    balance = deposit()
+    while True:
+        print(f"Current balance is ${balance}")
+        answer = input("Press enter to play (q to quit).")
+        if answer == "q":
+            break
+        balance += spin(balance)
+        
+    print(f"You left with ${balance}")
 
 main()
