@@ -24,6 +24,7 @@ symbol_value ={
 
 def check_winnings(columns, lines, bet, values):
     winnings = 0
+    winning_lines = []
     for line in range(lines):
         symbol = columns[0][line] # first symbol of first line
         for column in columns:
@@ -32,8 +33,8 @@ def check_winnings(columns, lines, bet, values):
                 break
         else:
             winnings += values[symbol] * bet 
-
-    return winnings
+            winning_lines.append(line + 1) # add 1 bc you want to display the line number, not the index number
+    return winnings, winning_lines
 
 def get_slot_machine_spin(rows, cols, symbols):
     all_symbols = []
@@ -120,5 +121,8 @@ def main():
 
     slots = get_slot_machine_spin(ROWS, COLS, symbol_count)
     print_slot_machine(slots)
+    winnings, winning_lines = check_winnings(slots, lines, bet, symbol_value)
+    print(f"You won ${winnings}!")
+    print(f"You won on lines:", *winning_lines) # * splat operator, passes every line from the winning_lines list to this print function
 
 main()
