@@ -31,8 +31,18 @@ def get_slot_machine_spin(rows, cols, symbols):
             column.append(value)
 
         columns.append(column) # add column to column list
-        
+
     return columns
+
+def print_slot_machine(columns): # transposing
+    for row in range(len(columns[0])): # assumes there is at least one column (at index 0)
+        for i, column in enumerate(columns):
+            if i != len(columns) - 1:
+                print(column[row], end=" | ") # | pipe operator
+            else: # end="\n" tells terminal to move to next line
+                print(column[row], end="") # don't print | after the last column
+            
+        print() # brings it down to the next line before printing the next row
 
 def deposit(): # function
     while True:
@@ -87,5 +97,8 @@ def main():
             break
 
     print(f"You are betting ${bet} on {lines} lines. Total bet is equal to: ${total_bet}.")
+
+    slots = get_slot_machine_spin(ROWS, COLS, symbol_count)
+    print_slot_machine(slots)
 
 main()
